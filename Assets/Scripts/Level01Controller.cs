@@ -9,6 +9,7 @@ public class Level01Controller : MonoBehaviour
     [SerializeField] Text _currentScoreTextView;
 
     int _currentScore;
+    string _highScore = "HighScore";
 
     private void Update()
     {
@@ -28,6 +29,16 @@ public class Level01Controller : MonoBehaviour
 
     public void ExitLevel()
     {
+        //compare current score with saved high score
+        int highScore = PlayerPrefs.GetInt(_highScore);
+        if (_currentScore > highScore)
+        {
+            //save current score as new high score
+            PlayerPrefs.SetInt(_highScore, _currentScore);
+            Debug.Log("New High Score: " + _currentScore);
+        }
+
+        //load new level, or in this case, the main menu
         SceneManager.LoadScene("MainMenu");
     }
 
