@@ -7,9 +7,16 @@ using UnityEngine.UI;
 public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
+    [SerializeField] GameObject _pauseMenu;
 
     int _currentScore;
     string _highScore = "HighScore";
+    bool inMenu = false;
+
+    private void Start()
+    {
+        Resume();
+    }
 
     private void Update()
     {
@@ -23,8 +30,17 @@ public class Level01Controller : MonoBehaviour
         //TODO bring up navigation pop-up menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ExitLevel();
+            //ExitLevel();
+            if (inMenu)
+            {
+                Resume();
+            }
+            else if (!inMenu)
+            {
+                Pause();
+            }
         }
+
     }
 
     public void ExitLevel()
@@ -40,6 +56,24 @@ public class Level01Controller : MonoBehaviour
 
         //load new level, or in this case, the main menu
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Resume()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _pauseMenu.SetActive(false);
+        inMenu = false;
+        Debug.Log(_pauseMenu.activeSelf);
+    }
+
+    public void Pause()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _pauseMenu.SetActive(true);
+        inMenu = true;
+        Debug.Log(_pauseMenu.activeSelf);
     }
 
     public void IncreaseScore(int scoreIncrease)

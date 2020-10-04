@@ -6,6 +6,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance = null;
+    public bool isPlaying = false;
 
     AudioSource _audioSource;
 
@@ -30,6 +31,13 @@ public class AudioManager : MonoBehaviour
     public void PlaySong(AudioClip clip)
     {
         _audioSource.clip = clip;
-        _audioSource.Play();
+        if (!isPlaying)
+        {
+           _audioSource.Play();
+        } else if (isPlaying)
+        {
+            _audioSource.UnPause();
+        }
+        
     }
 }
