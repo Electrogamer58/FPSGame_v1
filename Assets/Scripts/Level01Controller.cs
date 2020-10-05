@@ -11,7 +11,7 @@ public class Level01Controller : MonoBehaviour
 
     int _currentScore;
     string _highScore = "HighScore";
-    bool inMenu = false;
+    public bool inMenu = false;
 
     private void Start()
     {
@@ -64,6 +64,7 @@ public class Level01Controller : MonoBehaviour
         Cursor.visible = false;
         _pauseMenu.SetActive(false);
         inMenu = false;
+        Time.timeScale = 1;
         Debug.Log(_pauseMenu.activeSelf);
     }
 
@@ -73,6 +74,7 @@ public class Level01Controller : MonoBehaviour
         Cursor.visible = true;
         _pauseMenu.SetActive(true);
         inMenu = true;
+        Time.timeScale = 0;
         Debug.Log(_pauseMenu.activeSelf);
     }
 

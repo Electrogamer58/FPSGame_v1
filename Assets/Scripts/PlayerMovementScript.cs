@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
+    [Header("Weapon Settings")]
+    [SerializeField] public ParticleSystem muzzleFlash = null;
+    [SerializeField] public AudioSource shootSound = null;
+    [SerializeField] public AudioClip shootClip = null;
+
+    [Header("Movement Settings")]
     public CharacterController controller;
     public float _defaultMoveSpeed;
     public float _moveSpeed = 12f;
@@ -11,6 +17,7 @@ public class PlayerMovementScript : MonoBehaviour
     public float _gravity = -9.81f;
     public float _jumpHeight = 3f;
 
+    [Header("Ground Check Settings")]
     public Transform groundCheck;
     public float _groundDistance = -0.4f; //radius of sphere
     public LayerMask groundMask; //checks for collision with the floor specifically, in case it catches player collision first, which it will
@@ -29,27 +36,18 @@ public class PlayerMovementScript : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, _groundDistance, groundMask); //checks for collision with floor using a small invisible sphere; returns true/false
 
-        if (isGrounded && velocity.y < 0) //when touching the ground, AND when velocity is at all greater than 0 (meaning player is being pushed by gravity), reset the velocity
-        {
-            velocity.y = -2f; //sticks player to ground
-        }
+        jump();
 
         sprint();
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        move();
 
-        Vector3 _moveDirection = transform.right * x + transform.forward * z; //find the move direction based on axis buttons pressed times their respective transforms
-        controller.Move(_moveDirection * _moveSpeed * Time.deltaTime);
+        shoot();
 
-        velocity.y += _gravity * Time.deltaTime; //need a velocity variable to simulate real gravity
-        controller.Move(velocity * Time.deltaTime); //multiply times deltaTime twice, as is shown on velocity equation
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //force required to jump according to physics. (Square root of jump height x (-2) x gravity)
-        }
+        simulateGravity();
 
-        
+       
+
     }
 
     void sprint()
@@ -65,4 +63,42 @@ public class PlayerMovementScript : MonoBehaviour
             _moveSpeed = _defaultMoveSpeed;
         }
     }
+
+    void jump()
+    {
+        if (isGrounded && velocity.y < 0) //when touching the ground, AND when velocity is at all greater than 0 (meaning player is being pushed by gravity), reset the velocity
+        {
+            velocity.y = -2f; //sticks player to ground
+        }
+    }
+
+    void move()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 _moveDirection = transform.right * x + transform.forward * z; //find the move direction based on axis buttons pressed times their respective transforms
+        controller.Move(_moveDirection * _moveSpeed * Time.deltaTime);
+    }
+
+    void shoot()
+    {
+        if (Input.GetMouseButtonDown(0)) //0 is primary button
+        {
+            Debug.Log("PEW!");
+            muzzleFlash.Play();
+            shootSound.PlayOneShot(shootClip);
+        }
+    }
+
+    void simulateGravity()
+    {
+        velocity.y += _gravity * Time.deltaTime; //need a velocity variable to simulate real gravity
+        controller.Move(velocity * Time.deltaTime); //multiply times deltaTime twice, as is shown on velocity equation
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //force required to jump according to physics. (Square root of jump height x (-2) x gravity)
+        }
+    }
+
 }
