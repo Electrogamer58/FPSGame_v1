@@ -8,6 +8,7 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] public ParticleSystem muzzleFlash = null;
     [SerializeField] public AudioSource shootSound = null;
     [SerializeField] public AudioClip shootClip = null;
+    public Level01Controller level01Controller = null;
 
     [Header("Movement Settings")]
     public CharacterController controller;
@@ -22,35 +23,70 @@ public class PlayerMovementScript : MonoBehaviour
     public float _groundDistance = -0.4f; //radius of sphere
     public LayerMask groundMask; //checks for collision with the floor specifically, in case it catches player collision first, which it will
 
+    [Header("Health Settings")]
+    public float maxHealth = 50f;
+    public float currentHealth;
+    public HealthBar healthBar;
+    public LayerMask hazardMask;
+
+    [Header("Respawn Settings")]
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform respawnPoint;
+    public bool isDead;
+
     Vector3 velocity;
     bool isGrounded;
     bool isSprinting;
+    bool isHurt;
+    
 
     private void Start()
     {
         _defaultMoveSpeed = _moveSpeed;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(Mathf.FloorToInt(maxHealth));
+        isDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, _groundDistance, groundMask); //checks for collision with floor using a small invisible sphere; returns true/false
+        isHurt = Physics.CheckSphere(groundCheck.position, _groundDistance, hazardMask);
 
-        jump();
+        Jump();
 
-        sprint();
+        Sprint();
 
-        move();
+        Move();
 
-        shoot();
+        Shoot();
 
-        simulateGravity();
+        Die();
 
-       
+        SimulateGravity();
+
+        if (isHurt)
+        {
+            DamageTaken(0.1f);
+        }
+
 
     }
 
-    void sprint()
+    //private void OnTriggerEnter(Collider other) //damage taken upon collision with hazard volume
+    //{
+        //if (other.CompareTag("Hazard"))
+        //{
+           // DamageTaken(10);
+        //}
+    //}
+
+
+
+      
+
+    void Sprint()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
         {
@@ -64,7 +100,7 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-    void jump()
+    void Jump()
     {
         if (isGrounded && velocity.y < 0) //when touching the ground, AND when velocity is at all greater than 0 (meaning player is being pushed by gravity), reset the velocity
         {
@@ -72,7 +108,7 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-    void move()
+    void Move()
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -81,7 +117,7 @@ public class PlayerMovementScript : MonoBehaviour
         controller.Move(_moveDirection * _moveSpeed * Time.deltaTime);
     }
 
-    void shoot()
+    void Shoot()
     {
         if (Input.GetMouseButtonDown(0)) //0 is primary button
         {
@@ -91,7 +127,36 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-    void simulateGravity()
+    void Die()
+    {
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+            Debug.Log("Dead");
+            //player is dead
+            //enable death menu [Respawn or Quit] --> in level controller
+        }
+    }
+
+    public void Respawn()
+    {
+        if (isDead)
+        {
+            //this is what happens when player click respawn button
+            //reset coord's
+            //reset HP
+            //TODO add 50 score penalty
+            currentHealth = maxHealth;
+            healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
+            player.transform.position = respawnPoint.transform.position;
+            Physics.SyncTransforms();
+            isDead = false;
+
+        }
+    }
+
+
+    void SimulateGravity()
     {
         velocity.y += _gravity * Time.deltaTime; //need a velocity variable to simulate real gravity
         controller.Move(velocity * Time.deltaTime); //multiply times deltaTime twice, as is shown on velocity equation
@@ -99,6 +164,13 @@ public class PlayerMovementScript : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity); //force required to jump according to physics. (Square root of jump height x (-2) x gravity)
         }
+    }
+
+    void DamageTaken(float damage)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
     }
 
 }

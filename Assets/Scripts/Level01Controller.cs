@@ -8,6 +8,8 @@ public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
     [SerializeField] GameObject _pauseMenu;
+    [SerializeField] GameObject _dieMenu;
+    public PlayerMovementScript player = null;
 
     int _currentScore;
     string _highScore = "HighScore";
@@ -27,10 +29,9 @@ public class Level01Controller : MonoBehaviour
             IncreaseScore(5);
         }
         //EXIT LEVEL//
-        //TODO bring up navigation pop-up menu
+        //bring up navigation pop-up menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //ExitLevel();
             if (inMenu)
             {
                 Resume();
@@ -40,6 +41,8 @@ public class Level01Controller : MonoBehaviour
                 Pause();
             }
         }
+
+        DieMenu();
 
     }
 
@@ -77,6 +80,25 @@ public class Level01Controller : MonoBehaviour
         Time.timeScale = 0;
         Debug.Log(_pauseMenu.activeSelf);
     }
+
+    public void DieMenu()
+    {
+        if (player.isDead)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            _dieMenu.SetActive(true);
+            Time.timeScale = 0;
+            Debug.Log("Player Died");
+        } else if (!player.isDead)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            _dieMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
 
     public void IncreaseScore(int scoreIncrease)
     {
