@@ -32,16 +32,10 @@ public class Level01Controller : MonoBehaviour
         //bring up navigation pop-up menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (inMenu)
-            {
-                Resume();
-            }
-            else if (!inMenu)
-            {
-                Pause();
-            }
+            inMenu = !inMenu;
         }
 
+        PauseMenu();
         DieMenu();
 
     }
@@ -66,9 +60,9 @@ public class Level01Controller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _pauseMenu.SetActive(false);
-        inMenu = false;
         Time.timeScale = 1;
         Debug.Log(_pauseMenu.activeSelf);
+        inMenu = false;
     }
 
     public void Pause()
@@ -76,10 +70,29 @@ public class Level01Controller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _pauseMenu.SetActive(true);
-        inMenu = true;
         Time.timeScale = 0;
         Debug.Log(_pauseMenu.activeSelf);
+        inMenu = true;
     }
+
+
+    public void PauseMenu()
+    {
+        if (inMenu)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            _pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        } else if (!inMenu)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            _pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
 
     public void DieMenu()
     {

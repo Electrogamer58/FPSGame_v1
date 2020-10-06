@@ -68,7 +68,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (isHurt)
         {
-            DamageTaken(0.1f);
+            DamageTaken(0.9f);
         }
 
 
