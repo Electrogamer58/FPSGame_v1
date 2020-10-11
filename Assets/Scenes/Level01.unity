@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 370085547}
   - component: {fileID: 370085546}
   m_Layer: 5
-  m_Name: Paused_txt
+  m_Name: Died_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -762,7 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.3417201, b: 1, a: 0.77254903}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1100,7 +1100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665104838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -22.47, y: 0.19, z: 15.34}
+  m_LocalPosition: {x: -22.47, y: -0.9, z: 15.34}
   m_LocalScale: {x: 6.2111, y: 5.63796, z: 6.2111}
   m_Children: []
   m_Father: {fileID: 948728315}
@@ -1803,7 +1803,7 @@ GameObject:
   - component: {fileID: 956669220}
   - component: {fileID: 956669219}
   m_Layer: 5
-  m_Name: Resume_txt
+  m_Name: Respawn_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1883,7 +1883,7 @@ GameObject:
   - component: {fileID: 1012096848}
   - component: {fileID: 1012096847}
   m_Layer: 5
-  m_Name: Quit_txt
+  m_Name: DeadQuit_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1962,7 +1962,7 @@ GameObject:
   - component: {fileID: 1083625147}
   - component: {fileID: 1083625146}
   m_Layer: 5
-  m_Name: Quit_btn
+  m_Name: DeadQuit_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2393,7 +2393,7 @@ GameObject:
   - component: {fileID: 1278648737}
   - component: {fileID: 1278648736}
   m_Layer: 5
-  m_Name: Resume_btn
+  m_Name: Respawn_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2564,7 +2564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.3417201, b: 1, a: 0.77254903}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -32,10 +32,18 @@ public class Level01Controller : MonoBehaviour
         //bring up navigation pop-up menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            inMenu = !inMenu;
+            if (inMenu)
+            {
+                Resume();
+                
+            }
+            else
+            {
+                Pause();
+            }
         }
 
-        PauseMenu();
+        
         DieMenu();
 
     }
@@ -58,40 +66,33 @@ public class Level01Controller : MonoBehaviour
     public void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("Cursor set to " + Cursor.lockState);
         Cursor.visible = false;
+        Debug.Log("Cursor visibility is" + Cursor.visible);
         _pauseMenu.SetActive(false);
+        Debug.Log("Menu is active: " + _pauseMenu.activeSelf);
         Time.timeScale = 1;
-        Debug.Log(_pauseMenu.activeSelf);
+        Debug.Log("Timescale is at " + Time.timeScale);
         inMenu = false;
+        Debug.Log("Menu set to: " + inMenu);
     }
 
     public void Pause()
     {
         Cursor.lockState = CursorLockMode.None;
+        Debug.Log("Cursor set to " + Cursor.lockState);
         Cursor.visible = true;
+        Debug.Log("Cursor visibility is" + Cursor.visible);
         _pauseMenu.SetActive(true);
+        Debug.Log("Menu is active: " + _pauseMenu.activeSelf);
         Time.timeScale = 0;
-        Debug.Log(_pauseMenu.activeSelf);
+        Debug.Log("Timescale is at " + Time.timeScale);
         inMenu = true;
+        Debug.Log("Menu set to: " + inMenu);
     }
 
 
-    public void PauseMenu()
-    {
-        if (inMenu)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            _pauseMenu.SetActive(true);
-            Time.timeScale = 0;
-        } else if (!inMenu)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            _pauseMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
-    }
+   
 
 
     public void DieMenu()
@@ -103,7 +104,7 @@ public class Level01Controller : MonoBehaviour
             _dieMenu.SetActive(true);
             Time.timeScale = 0;
             Debug.Log("Player Died");
-        } else if (!player.isDead)
+        } else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

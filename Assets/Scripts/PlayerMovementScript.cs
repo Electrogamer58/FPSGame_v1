@@ -121,7 +121,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) //0 is primary button
         {
-            Debug.Log("PEW!");
+            //Debug.Log("PEW!");
             muzzleFlash.Play();
             shootSound.PlayOneShot(shootClip);
         }
