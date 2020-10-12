@@ -150,6 +150,7 @@ public class PlayerMovementScript : MonoBehaviour
             healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
             player.transform.position = respawnPoint.transform.position;
             Physics.SyncTransforms();
+            level01Controller.IncreaseScore(-50);
             isDead = false;
 
         }
