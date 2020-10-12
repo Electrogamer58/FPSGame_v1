@@ -11,7 +11,7 @@ public class Level01Controller : MonoBehaviour
     [SerializeField] GameObject _dieMenu;
     public PlayerMovementScript player = null;
 
-    int _currentScore;
+    public int _currentScore;
     string _highScore = "HighScore";
     public bool inMenu = false;
 

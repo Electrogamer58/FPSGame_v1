@@ -142,17 +142,19 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (isDead)
         {
-            //this is what happens when player click respawn button
-            //reset coord's
-            //reset HP
-            //TODO add 50 score penalty
-            currentHealth = maxHealth;
-            healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
-            player.transform.position = respawnPoint.transform.position;
-            Physics.SyncTransforms();
-            level01Controller.IncreaseScore(-50);
-            isDead = false;
-
+            if (level01Controller._currentScore >= 50)
+            {
+                //this is what happens when player click respawn button
+                //reset coord's
+                //reset HP
+                //TODO add 50 score penalty
+                currentHealth = maxHealth;
+                healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
+                player.transform.position = respawnPoint.transform.position;
+                Physics.SyncTransforms();
+                level01Controller.IncreaseScore(-50);
+                isDead = false;
+            }
         }
     }
 
