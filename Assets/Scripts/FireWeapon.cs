@@ -25,7 +25,7 @@ public class FireWeapon : MonoBehaviour
     }
 
     //fire the weapon
-    void Shoot()
+    public void Shoot()
     {
         //calculate direction to shoot ray
         Vector3 rayDirection = cameraController.transform.forward;

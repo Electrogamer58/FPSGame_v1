@@ -29,6 +29,8 @@ public class MainMenuController : MonoBehaviour
         if (buttonPressed)
         {
             PlayerPrefs.SetInt(_highScore, 0);
+            int highScore = PlayerPrefs.GetInt(_highScore);
+            _highScoreTextView.text = highScore.ToString();
         }
     }
 

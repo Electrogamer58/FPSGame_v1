@@ -24,7 +24,7 @@ public class PlayerMovementScript : MonoBehaviour
     public LayerMask groundMask; //checks for collision with the floor specifically, in case it catches player collision first, which it will
 
     [Header("Health Settings")]
-    public float maxHealth = 50f;
+    public float maxHealth = 100f;
     public float currentHealth;
     public HealthBar healthBar;
     public LayerMask hazardMask;
@@ -132,6 +132,7 @@ public class PlayerMovementScript : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true;
+            level01Controller.inDeathMenu = true;
             Debug.Log("Dead");
             //player is dead
             //enable death menu [Respawn or Quit] --> in level controller
@@ -169,7 +170,7 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-    void DamageTaken(float damage)
+    public void DamageTaken(float damage)
     {
         currentHealth -= damage;
 

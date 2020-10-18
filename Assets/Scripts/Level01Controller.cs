@@ -14,6 +14,7 @@ public class Level01Controller : MonoBehaviour
     public int _currentScore;
     string _highScore = "HighScore";
     public bool inMenu = false;
+    public bool inDeathMenu = false;
 
     private void Start()
     {
@@ -43,8 +44,11 @@ public class Level01Controller : MonoBehaviour
             }
         }
 
+        if (inDeathMenu)
+        {
+            DieMenu();
+        }
         
-        DieMenu();
 
     }
 

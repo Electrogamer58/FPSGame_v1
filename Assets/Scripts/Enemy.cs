@@ -8,12 +8,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject enemyVisual;
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] Level01Controller level01Controller;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] ViewRange viewRange;
+    [SerializeField] EnemyFireWeapon enemyFire;
+
+    public float shootSpeed;
+
+
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        LookAtPlayer();
     }
 
     public void TakeDamage(int _damageToTake)
@@ -34,5 +41,16 @@ public class Enemy : MonoBehaviour
     {
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
         collider.enabled = false;
+    }
+
+    void LookAtPlayer()
+    {
+       if (viewRange.seePlayer == true)
+        {
+            transform.LookAt(playerTransform);
+
+            enemyFire.Shoot();
+            
+        }
     }
 }
