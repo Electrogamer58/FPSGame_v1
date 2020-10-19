@@ -11,10 +11,12 @@ public class EnemyFireWeapon : MonoBehaviour
     [SerializeField] GameObject hitEnvironmentFeedback;
     [SerializeField] int weaponDamage = 1;
     [SerializeField] LayerMask hitLayers;
-    public float spreadFactor = 0.2f;
+    [SerializeField] GameObject bullet;
+
+    public float spreadFactor = 0.1f;
     float fireRate = 5;
 
-    public float reloadTime = 4;
+    public float nextFire = 4;
 
     RaycastHit hitInfo;
 
@@ -28,46 +30,16 @@ public class EnemyFireWeapon : MonoBehaviour
     //}
 
     //fire the weapon
-    public void Shoot()
+    public void ShootBullet()
     {
-        if (Time.time > reloadTime)
+        if (Time.time > nextFire)
         {
-            reloadTime = Time.time + fireRate;
-            //calculate direction to shoot ray
-            Vector3 rayDirection = enemyController.transform.forward;
-            //rayDirection.x += Random.Range(-spreadFactor, spreadFactor);
-            //rayDirection.y += Random.Range(-spreadFactor, spreadFactor);
-            //rayDirection.z += Random.Range(-spreadFactor, spreadFactor);
-            //cast debug ray
-            Debug.DrawRay(eye.position, rayDirection * rayDistance, Color.red, 1);
-            //cast real raycast
-            if (Physics.Raycast(eye.position, rayDirection, out hitInfo, rayDistance, hitLayers))
-            {
-                Debug.Log("Hit a " + hitInfo.transform.name + "!");
-                if (hitInfo.transform.tag == "Player")
-                {
-                    hitPlayerFeedback.transform.position = hitInfo.point;
-                    ParticleSystem bloodspurt = hitPlayerFeedback.GetComponent<ParticleSystem>();
-                    bloodspurt.Play();
-                    PlayerMovementScript playerHit = hitInfo.transform.gameObject.GetComponent<PlayerMovementScript>();
-                    if (playerHit != null)
-                    {
-                        playerHit.DamageTaken(weaponDamage);
-                    }
-                } //TODO add wall visual feedback
-                if (hitInfo.transform.tag == "Wall")
-                {
-                    hitEnvironmentFeedback.transform.position = hitInfo.point;
-                    ParticleSystem damageSpurt = hitEnvironmentFeedback.GetComponent<ParticleSystem>();
-                    damageSpurt.Play();
-                }
 
-
-            }
-            else
-            {
-                Debug.Log("Missed!");
-            }
+            nextFire = Time.time + fireRate;
+            Instantiate(bullet, transform.position, Quaternion.identity);
+            Instantiate(hitPlayerFeedback, transform.position, Quaternion.identity);
+            Instantiate(hitEnvironmentFeedback, transform.position, Quaternion.identity);
+            nextFire = Time.time + fireRate;
             
         }
     }

@@ -12,8 +12,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] ViewRange viewRange;
     [SerializeField] EnemyFireWeapon enemyFire;
 
-    public float shootSpeed;
-
 
 
 
@@ -32,15 +30,24 @@ public class Enemy : MonoBehaviour
             enemyVisual.SetActive(false);
             deathParticles.Play();
             Debug.Log("Enemy Killed");
-            DelayHelper.DelayAction(this, DisableEnemy, 3);
+            DisableEnemy();
             level01Controller.IncreaseScore(50);
         }
     }
 
     void DisableEnemy()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
         collider.enabled = false;
+        DelayHelper.DelayAction(this, DeleteSelf, 1);
+
+    }
+
+    void DeleteSelf()
+    {
+        Destroy(gameObject, 0);
     }
 
     void LookAtPlayer()
@@ -49,7 +56,7 @@ public class Enemy : MonoBehaviour
         {
             transform.LookAt(playerTransform);
 
-            enemyFire.Shoot();
+            enemyFire.ShootBullet();
             
         }
     }
