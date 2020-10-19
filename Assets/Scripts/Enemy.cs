@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] ViewRange viewRange;
     [SerializeField] EnemyFireWeapon enemyFire;
+    [SerializeField] AudioSource explosion;
 
 
 
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
         {
             enemyVisual.SetActive(false);
             deathParticles.Play();
+            explosion.PlayOneShot(explosion.clip, 2);
             Debug.Log("Enemy Killed");
             DisableEnemy();
             level01Controller.IncreaseScore(50);

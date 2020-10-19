@@ -24,6 +24,8 @@ public class PlayerMovementScript : MonoBehaviour
     public LayerMask groundMask; //checks for collision with the floor specifically, in case it catches player collision first, which it will
 
     [Header("Health Settings")]
+    [SerializeField] GameObject damagePanel;
+    [SerializeField] AudioClip damageClip;
     public float maxHealth = 100f;
     public float currentHealth;
     public HealthBar healthBar;
@@ -33,6 +35,9 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Transform respawnPoint;
     public bool isDead;
+
+    [Header("Miscelaneous")]
+    [SerializeField] AudioClip loseClip;
 
     Vector3 velocity;
     bool isGrounded;
@@ -131,6 +136,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            AudioHelper.PlayClip2D(loseClip, 2);
             isDead = true;
             level01Controller.inDeathMenu = true;
             Debug.Log("Dead");
@@ -172,9 +178,20 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void DamageTaken(float damage)
     {
-        currentHealth -= damage;
-
-        healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
+        StartCoroutine(DamageRoutine(damage));
+        
     }
 
+    private IEnumerator DamageRoutine(float damage)
+    {
+        if (!isDead)
+        {
+            AudioHelper.PlayClip2D(damageClip, 1);
+        }
+        damagePanel.SetActive(true);
+        currentHealth -= damage;
+        healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
+        yield return new WaitForSeconds(0.1f);
+        damagePanel.SetActive(false);
+    }
 }

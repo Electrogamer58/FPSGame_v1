@@ -12,6 +12,7 @@ public class EnemyFireWeapon : MonoBehaviour
     [SerializeField] int weaponDamage = 1;
     [SerializeField] LayerMask hitLayers;
     [SerializeField] GameObject bullet;
+    [SerializeField] AudioSource bulletSound;
 
     public float spreadFactor = 0.1f;
     float fireRate = 5;
@@ -20,15 +21,6 @@ public class EnemyFireWeapon : MonoBehaviour
 
     RaycastHit hitInfo;
 
-
-    //void Update()
-    //{
-        //if (Input.GetKeyDown(KeyCode.Mouse0))
-        //{
-            //Shoot();
-        //}
-    //}
-
     //fire the weapon
     public void ShootBullet()
     {
@@ -36,9 +28,11 @@ public class EnemyFireWeapon : MonoBehaviour
         {
 
             nextFire = Time.time + fireRate;
+            bulletSound.PlayOneShot(bulletSound.clip, 1);
             Instantiate(bullet, transform.position, Quaternion.identity);
-            Instantiate(hitPlayerFeedback, transform.position, Quaternion.identity);
-            Instantiate(hitEnvironmentFeedback, transform.position, Quaternion.identity);
+            Debug.Log("Shoot!");
+            //Instantiate(hitPlayerFeedback, transform.position, Quaternion.identity);
+            //Instantiate(hitEnvironmentFeedback, transform.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
             
         }

@@ -11,7 +11,9 @@ public class FireWeapon : MonoBehaviour
     [SerializeField] GameObject hitEnvironmentFeedback;
     [SerializeField] int weaponDamage = 15;
     [SerializeField] LayerMask hitLayers;
-    public float spreadFactor = 0.2f;
+    [SerializeField] AudioClip hitAudio;
+    [SerializeField] AudioClip enemyHitAudio;
+    public float spreadFactor = 0.01f;
 
     RaycastHit hitInfo;
 
@@ -37,6 +39,7 @@ public class FireWeapon : MonoBehaviour
         //cast real raycast
         if (Physics.Raycast(barrelEnd.position, rayDirection, out hitInfo, rayDistance, hitLayers))
         {
+            AudioSource.PlayClipAtPoint(hitAudio, hitInfo.point, 1);
             Debug.Log("Hit a " + hitInfo.transform.name + "!");
             if (hitInfo.transform.tag == "Enemy")
             {
@@ -47,6 +50,7 @@ public class FireWeapon : MonoBehaviour
                 if (enemyHit != null)
                 {
                     enemyHit.TakeDamage(weaponDamage);
+                    AudioHelper.PlayClip2D(enemyHitAudio, 1);
                 }
             } //TODO add wall visual feedback
             if (hitInfo.transform.tag == "Wall")

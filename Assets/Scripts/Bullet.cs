@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         target = FindObjectOfType<PlayerMovementScript>();
         moveDirection = (target.transform.position - transform.position).normalized * moveSpeed;
@@ -32,6 +33,16 @@ public class Bullet : MonoBehaviour
             ParticleSystem bloodspurt = bloodParticles.GetComponent<ParticleSystem>();
             bloodspurt.Play();
             Destroy(gameObject, 0);
+
+        }
+
+        if (other.tag == "Wall")
+        {
+            wallParticles.transform.position = transform.position;
+            ParticleSystem wallspurt = wallParticles.GetComponent<ParticleSystem>();
+            wallspurt.Play();
+            Destroy(gameObject, 0);
         }
     }
+
 }

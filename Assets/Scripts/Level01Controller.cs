@@ -23,12 +23,6 @@ public class Level01Controller : MonoBehaviour
 
     private void Update()
     {
-        //INCREASE SCORE//
-        //TODO replace with real implementation; this is for test purposes
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            IncreaseScore(5);
-        }
         //EXIT LEVEL//
         //bring up navigation pop-up menu
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -114,6 +108,7 @@ public class Level01Controller : MonoBehaviour
             Cursor.visible = false;
             _dieMenu.SetActive(false);
             Time.timeScale = 1;
+            inDeathMenu = false;
         }
     }
 

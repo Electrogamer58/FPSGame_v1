@@ -7,6 +7,8 @@ TagManager:
   - Hazard
   - Enemy
   - Wall
+  - Wallspurt
+  - Bloodspurt
   layers:
   - Default
   - TransparentFX
