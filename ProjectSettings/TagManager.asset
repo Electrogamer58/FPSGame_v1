@@ -11,6 +11,7 @@ TagManager:
   - Bloodspurt
   - MainController
   - EnergyBall
+  - Teleporter
   layers:
   - Default
   - TransparentFX

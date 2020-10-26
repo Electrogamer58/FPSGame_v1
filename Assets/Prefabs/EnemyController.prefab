@@ -10340,10 +10340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyController: {fileID: 3222511837997134396}
   eye: {fileID: 3222511837293469362}
-  rayDistance: 15
   hitPlayerFeedback: {fileID: 0}
   hitEnvironmentFeedback: {fileID: 0}
-  weaponDamage: 10
   hitLayers:
     serializedVersion: 2
     m_Bits: 3328

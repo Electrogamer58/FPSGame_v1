@@ -193,8 +193,11 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (isOnEnemy)
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            enemy.TakeDamage(10);
+            if (other.tag.Equals("Enemy"))
+            {
+                Enemy enemy = other.GetComponent<Enemy>();
+                enemy.TakeDamage(10);
+            }
         }
     }
 }
