@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - Wallspurt
   - Bloodspurt
+  - MainController
+  - EnergyBall
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
     Rigidbody rb;
 
-    PlayerMovementScript target;
+    PlayerMovementScript target = null;
     Vector3 moveDirection;
 
     private void Start()
@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            Instantiate(bloodParticles, transform.position, transform.rotation);
             target.DamageTaken(bulletDamage);
             bloodParticles.transform.position = transform.position;
             ParticleSystem bloodspurt = bloodParticles.GetComponent<ParticleSystem>();

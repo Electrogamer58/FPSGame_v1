@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        level01Controller = GameObject.FindGameObjectWithTag("MainController").GetComponent<Level01Controller>();
+
         LookAtPlayer();
     }
 
@@ -56,10 +61,13 @@ public class Enemy : MonoBehaviour
     {
        if (viewRange.seePlayer == true)
         {
+            
             transform.LookAt(playerTransform);
 
             enemyFire.ShootBullet();
             
         }
     }
+
+ 
 }

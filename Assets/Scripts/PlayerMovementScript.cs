@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
-    [Header("Weapon Settings")]
-    [SerializeField] public ParticleSystem muzzleFlash = null;
-    [SerializeField] public AudioSource shootSound = null;
-    [SerializeField] public AudioClip shootClip = null;
+    [Header("LevelController")]
+    //[SerializeField] public ParticleSystem muzzleFlash = null;
+    //[SerializeField] public AudioSource shootSound = null;
+    //[SerializeField] public AudioClip shootClip = null;
     public Level01Controller level01Controller = null;
 
     [Header("Movement Settings")]
     public CharacterController controller;
     public float _defaultMoveSpeed;
     public float _moveSpeed = 12f;
+    public float _slowedSpeed = 2f;
     public float _sprintSpeed = 18f;
     public float _gravity = -9.81f;
     public float _jumpHeight = 3f;
@@ -22,6 +23,7 @@ public class PlayerMovementScript : MonoBehaviour
     public Transform groundCheck;
     public float _groundDistance = -0.4f; //radius of sphere
     public LayerMask groundMask; //checks for collision with the floor specifically, in case it catches player collision first, which it will
+    [SerializeField] FireWeapon fireWeapon;
 
     [Header("Health Settings")]
     [SerializeField] GameObject damagePanel;
@@ -38,11 +40,13 @@ public class PlayerMovementScript : MonoBehaviour
 
     [Header("Miscelaneous")]
     [SerializeField] AudioClip loseClip;
+    public LayerMask enemyMask;
 
     Vector3 velocity;
-    bool isGrounded;
+    public bool isGrounded;
     bool isSprinting;
     bool isHurt;
+    public bool isOnEnemy;
     
 
     private void Start()
@@ -57,6 +61,7 @@ public class PlayerMovementScript : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, _groundDistance, groundMask); //checks for collision with floor using a small invisible sphere; returns true/false
+        isOnEnemy = Physics.CheckSphere(groundCheck.position, _groundDistance, enemyMask);
         isHurt = Physics.CheckSphere(groundCheck.position, _groundDistance, hazardMask);
 
         Jump();
@@ -64,8 +69,6 @@ public class PlayerMovementScript : MonoBehaviour
         Sprint();
 
         Move();
-
-        Shoot();
 
         Die();
 
@@ -107,7 +110,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded && velocity.y < 0) //when touching the ground, AND when velocity is at all greater than 0 (meaning player is being pushed by gravity), reset the velocity
+        if (isGrounded && velocity.y < 0 && fireWeapon.rightClickHeld == false) //when touching the ground, AND when velocity is at all greater than 0 (meaning player is being pushed by gravity), reset the velocity
         {
             velocity.y = -2f; //sticks player to ground
         }
@@ -122,15 +125,6 @@ public class PlayerMovementScript : MonoBehaviour
         controller.Move(_moveDirection * _moveSpeed * Time.deltaTime);
     }
 
-    void Shoot()
-    {
-        if (Input.GetMouseButtonDown(0)) //0 is primary button
-        {
-            //Debug.Log("PEW!");
-            muzzleFlash.Play();
-            shootSound.PlayOneShot(shootClip);
-        }
-    }
 
     void Die()
     {
@@ -193,5 +187,14 @@ public class PlayerMovementScript : MonoBehaviour
         healthBar.SetHealth(Mathf.FloorToInt(currentHealth));
         yield return new WaitForSeconds(0.1f);
         damagePanel.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isOnEnemy)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.TakeDamage(10);
+        }
     }
 }

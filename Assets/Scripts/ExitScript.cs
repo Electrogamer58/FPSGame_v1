@@ -41,13 +41,13 @@ public class ExitScript : MonoBehaviour
                     {
                         lvl01Controller.IncreaseScore(-scoreNecessary);
                         Debug.Log("GAME OVER!");
-                        AudioHelper.PlayClip2D(victorySound, 2);
+                        AudioHelper.PlayClip2D(victorySound, 3);
                     }
 
                     else if (lvl01Controller._currentScore < scoreNecessary)
                     {
                         Debug.Log("Not enough score");
-                        AudioHelper.PlayClip2D(errorSound, 2);
+                        AudioHelper.PlayClip2D(errorSound, 3);
                     }
                 }
         }

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3268639820576531845}
   m_Layer: 10
   m_Name: EnemyProjectile
-  m_TagString: Enemy
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
     type: 3}
   wallParticles: {fileID: 7748750134435236706, guid: 2a4daa4ce07abe745a050c1492e5117d,
     type: 3}
-  moveSpeed: 10
+  moveSpeed: 20
   bulletDamage: 4
 --- !u!54 &3268639820576531844
 Rigidbody:

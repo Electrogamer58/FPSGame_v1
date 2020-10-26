@@ -6,10 +6,10 @@ public class EnemyFireWeapon : MonoBehaviour
 {
     [SerializeField] Enemy enemyController;
     [SerializeField] Transform eye;
-    [SerializeField] float rayDistance = 15;
+    //[SerializeField] float rayDistance = 15;
     [SerializeField] GameObject hitPlayerFeedback;
     [SerializeField] GameObject hitEnvironmentFeedback;
-    [SerializeField] int weaponDamage = 1;
+    //[SerializeField] int weaponDamage = 1;
     [SerializeField] LayerMask hitLayers;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource bulletSound;
@@ -29,8 +29,8 @@ public class EnemyFireWeapon : MonoBehaviour
 
             nextFire = Time.time + fireRate;
             bulletSound.PlayOneShot(bulletSound.clip, 1);
-            Instantiate(bullet, transform.position, Quaternion.identity);
-            Debug.Log("Shoot!");
+            Instantiate(bullet, eye.position, Quaternion.identity);
+            Debug.Log("Enemy Shoot!");
             //Instantiate(hitPlayerFeedback, transform.position, Quaternion.identity);
             //Instantiate(hitEnvironmentFeedback, transform.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
