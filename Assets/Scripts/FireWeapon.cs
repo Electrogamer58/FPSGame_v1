@@ -28,12 +28,6 @@ public class FireWeapon : MonoBehaviour
 
     RaycastHit hitInfo;
 
-
-    private void Awake()
-    {
-        //line = GetComponent<LineRenderer>();
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))

@@ -13,6 +13,7 @@ public class EnemyFireWeapon : MonoBehaviour
     [SerializeField] LayerMask hitLayers;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource bulletSound;
+    [SerializeField] ParticleSystem chargeParticles;
 
     public float spreadFactor = 0.1f;
     float fireRate = 5;
@@ -24,15 +25,22 @@ public class EnemyFireWeapon : MonoBehaviour
     //fire the weapon
     public void ShootBullet()
     {
+        if (Time.time > nextFire - 3)
+        {
+            chargeParticles.Play();
+            Debug.Log("Charging...");
+        }
         if (Time.time > nextFire)
         {
 
-            nextFire = Time.time + fireRate;
+            //nextFire = Time.time + fireRate;
             bulletSound.PlayOneShot(bulletSound.clip, 1);
             Instantiate(bullet, eye.position, Quaternion.identity);
             Debug.Log("Enemy Shoot!");
             //Instantiate(hitPlayerFeedback, transform.position, Quaternion.identity);
             //Instantiate(hitEnvironmentFeedback, transform.position, Quaternion.identity);
+            chargeParticles.Stop();
+            Debug.Log("Particles Stopped");
             nextFire = Time.time + fireRate;
             
         }

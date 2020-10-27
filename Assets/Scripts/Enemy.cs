@@ -14,16 +14,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioSource explosion;
 
 
+    private void Awake()
+    {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
+        level01Controller = GameObject.FindGameObjectWithTag("MainController").GetComponent<Level01Controller>();
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
-        level01Controller = GameObject.FindGameObjectWithTag("MainController").GetComponent<Level01Controller>();
-
         LookAtPlayer();
     }
 
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject, 0);
     }
 
-    void LookAtPlayer()
+    public void LookAtPlayer()
     {
        if (viewRange.seePlayer == true)
         {

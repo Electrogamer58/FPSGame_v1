@@ -11,19 +11,22 @@ public class EnergyBall : MonoBehaviour
     public int weaponDamage = 30;
 
     Vector3 buffer;
+    Animator animator;
     public LayerMask enemyMask;
     public bool hitSomething = false;
     public bool userHasShot = false;
     public bool reachedPeak = false;
 
     RaycastHit hitInfo;
-
-
-
-
+    private void Awake()
+    {
+        animator = gameObject.GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        animator.SetBool("EnergyIsShot", false);
+
         if (other.tag.Equals("Enemy"))
         {
             hitSomething = true;
@@ -40,8 +43,9 @@ public class EnergyBall : MonoBehaviour
         if (other.tag.Equals("Wall"))
         {
             hitSomething = true;
-            Animator animator = gameObject.GetComponent<Animator>();
+            
             animator.SetTrigger("EnergyExplosion");
+            animator.SetBool("EnergyHitWall", true);
             
             userHasShot = false;
         }
@@ -54,13 +58,15 @@ public class EnergyBall : MonoBehaviour
         }
     }
 
+
+    //Attempts to make collision more 'accurate'
     private void LateUpdate()
     {
         if (!hitSomething && userHasShot)
         {
             Debug.DrawRay(transform.position, transform.forward * 1, Color.green, 3);
             Debug.DrawRay(transform.position, transform.right * 1, Color.green, 3);
-            if (Physics.Raycast(transform.position, transform.forward, out hitInfo, 1) || Physics.Raycast(transform.position, transform.right, out hitInfo, 1))
+            if (Physics.Raycast(transform.position, transform.forward, out hitInfo, 3) || Physics.Raycast(transform.position, transform.right, out hitInfo, 3))
             {
                 if (hitInfo.transform.tag.Equals("Enemy"))
                 {
@@ -82,6 +88,7 @@ public class EnergyBall : MonoBehaviour
                     hitSomething = true;
                     Animator animator = gameObject.GetComponent<Animator>();
                     animator.SetTrigger("EnergyExplosion");
+                    animator.SetBool("EnergyHitWall", true);
 
                     userHasShot = false;
                 }
