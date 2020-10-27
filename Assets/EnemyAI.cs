@@ -59,7 +59,8 @@ public class EnemyAI : MonoBehaviour
 
         if (walkPointSet)
         {
-            agent.SetDestination(walkPoint); //move towards walkpoint
+            if (agent.Warp(walkPoint))
+                agent.SetDestination(walkPoint); //move towards walkpoint
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -84,12 +85,14 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        if (agent.Warp(player.position))
+            agent.destination = player.position;
     }
 
     private void AttackPlayer()
     {
         //make sure enemy doesnt move
+        if (agent.Warp(transform.position))
         agent.SetDestination(transform.position);
 
         //transform.LookAt(player);
@@ -106,5 +109,13 @@ public class EnemyAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
