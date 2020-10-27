@@ -18,6 +18,8 @@ public class PlayerMovementScript : MonoBehaviour
     public float _sprintSpeed = 18f;
     public float _gravity = -9.81f;
     public float _jumpHeight = 3f;
+    [SerializeField] AudioSource slowSteps;
+    [SerializeField] AudioSource fastSteps;
 
     [Header("Ground Check Settings")]
     public Transform groundCheck;
@@ -123,6 +125,14 @@ public class PlayerMovementScript : MonoBehaviour
 
         Vector3 _moveDirection = transform.right * x + transform.forward * z; //find the move direction based on axis buttons pressed times their respective transforms
         controller.Move(_moveDirection * _moveSpeed * Time.deltaTime);
+        if (controller.isGrounded == true && controller.velocity.magnitude > 1f)
+        {
+            slowSteps.volume = Random.Range(0.8f, 1);
+            slowSteps.pitch = Random.Range(0.8f, 1);
+            slowSteps.Play();
+        }
+        
+        
     }
 
 

@@ -53,6 +53,10 @@ public class EnergyBall : MonoBehaviour
         if (other.tag.Equals("Teleporter"))
         {
             hitSomething = true;
+            Debug.Log("Teleporter Activated");
+            player.transform.position = other.transform.position;
+            player.transform.position = other.transform.position;
+            player.transform.position = other.transform.position;
             player.transform.position = other.transform.position;
             userHasShot = false;
         }

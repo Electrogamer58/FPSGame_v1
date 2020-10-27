@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] ViewRange viewRange;
     [SerializeField] EnemyFireWeapon enemyFire;
     [SerializeField] AudioSource explosion;
+    [SerializeField] public ParticleSystem chargeParticles;
 
 
     private void Awake()
@@ -63,11 +64,19 @@ public class Enemy : MonoBehaviour
         {
             
             transform.LookAt(playerTransform);
+            DelayHelper.DelayAction(this, Charge, 0.1f);
 
             enemyFire.ShootBullet();
             
         }
     }
 
- 
+    void Charge()
+    {
+        chargeParticles.Play();
+        Debug.Log("Charging...");
+
+    }
+
+
 }

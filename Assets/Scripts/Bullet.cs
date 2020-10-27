@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
     Rigidbody rb;
 
-    PlayerMovementScript target = null;
+    public PlayerMovementScript target = null;
     Vector3 moveDirection;
 
     private void Start()

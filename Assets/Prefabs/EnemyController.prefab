@@ -15084,6 +15084,7 @@ MonoBehaviour:
   viewRange: {fileID: 3222511836851390407}
   enemyFire: {fileID: 3222511837997134392}
   explosion: {fileID: 3222511837997134393}
+  chargeParticles: {fileID: 8772385085714645754}
 --- !u!114 &2916199198502259835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15091,7 +15092,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3222511837997134399}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bc2b8e88a7e58545b7b8989db291d5d, type: 3}
   m_Name: 
@@ -15133,7 +15134,6 @@ MonoBehaviour:
     m_Bits: 3328
   bullet: {fileID: 3268639820576531854, guid: e811431d63f802c478d0b0a3866a2e2d, type: 3}
   bulletSound: {fileID: 3222511837997134391}
-  chargeParticles: {fileID: 8772385085714645754}
   spreadFactor: 0.2
   nextFire: 4
 --- !u!82 &3222511837997134391
@@ -15146,7 +15146,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ffe2277f42588004f96a7bc67bf99a7b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2feb0acecacb96142b9d837dc5a08144, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -15347,7 +15347,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &865354626
