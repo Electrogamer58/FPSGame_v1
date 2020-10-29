@@ -9,6 +9,7 @@ public class ExitScript : MonoBehaviour
     [SerializeField] AudioClip errorSound;
     [SerializeField] AudioClip victorySound;
     [SerializeField] int scoreNecessary;
+    public SceneLoader loader;
 
     bool inVolume;
 
@@ -48,6 +49,7 @@ public class ExitScript : MonoBehaviour
                     {
                         Debug.Log("Not enough score");
                         AudioHelper.PlayClip2D(errorSound, 3);
+                        DelayHelper.DelayAction(this, Leave, 1);
                     }
                 }
         }
@@ -56,5 +58,11 @@ public class ExitScript : MonoBehaviour
         {
             exitText.SetActive(false);
         }
+    }
+
+    void Leave()
+    {
+        
+        loader.LoadScene("MainMenu");
     }
 }
